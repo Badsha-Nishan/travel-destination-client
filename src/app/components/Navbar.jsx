@@ -1,7 +1,17 @@
+"use client";
+import { authClient } from "@/lib/auth-client";
+import { Avatar, Button } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
 
 const Navbar = () => {
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+
+  const handleLogOut = async () => {
+    await authClient.signOut();
+  };
+
   return (
     <div className="py-4 w-11/12 mx-auto flex flex-col md:flex-row justify-between items-center">
       <ul className="flex items-center gap-3">
@@ -33,12 +43,38 @@ const Navbar = () => {
         <li>
           <Link href={"/profile"}>Profile</Link>
         </li>
-        <li>
-          <Link href={"/login"}>Login</Link>
-        </li>
-        <li>
-          <Link href={"/signup"}>Sign Up</Link>
-        </li>
+        {user ? (
+          <>
+            <Avatar>
+              <Avatar.Image
+                referrerPolicy="no-referrer"
+                alt={user?.name}
+                src={user?.image}
+              />
+              <Avatar.Fallback>{user?.name.charAt(0)}</Avatar.Fallback>
+            </Avatar>
+            <li>
+              <Link href={"/"}>
+                <Button
+                  onClick={handleLogOut}
+                  variant="danger"
+                  className={"rounded-none"}
+                >
+                  LogOut
+                </Button>
+              </Link>
+            </li>
+          </>
+        ) : (
+          <>
+            <li>
+              <Link href={"/login"}>Login</Link>
+            </li>
+            <li>
+              <Link href={"/signup"}>Sign Up</Link>
+            </li>
+          </>
+        )}
       </ul>
     </div>
   );
