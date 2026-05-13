@@ -1,5 +1,6 @@
 "use client";
 import { authClient } from "@/lib/auth-client";
+import { FcGoogle } from "react-icons/fc";
 import {
   Button,
   Card,
@@ -14,6 +15,11 @@ import {
 import { redirect } from "next/navigation";
 
 const LoginPage = () => {
+  const handleSignInGoogle = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+    });
+  };
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -92,13 +98,23 @@ const LoginPage = () => {
                 Login
               </Button>
             </div>
-            <div className="flex items-center justify-center gap-4">
-              <Separator />
-              <p className="">Or Continue with</p>
-              <Separator />
-            </div>
           </div>
         </Form>
+        <div className="flex items-center justify-center gap-2">
+          <Separator />
+          <p className="whitespace-nowrap">Or SignUp with</p>
+          <Separator />
+        </div>
+        <div className="w-[500px] mx-auto">
+          <Button
+            onClick={handleSignInGoogle}
+            variant="outline"
+            className={"w-full rounded-none"}
+          >
+            <FcGoogle />
+            SignUp with Google
+          </Button>
+        </div>
       </Card>
     </div>
   );
