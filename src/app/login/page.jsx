@@ -13,6 +13,7 @@ import {
   TextField,
 } from "@heroui/react";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 const LoginPage = () => {
   const handleSignInGoogle = async () => {
@@ -114,6 +115,12 @@ const LoginPage = () => {
             <FcGoogle />
             SignUp with Google
           </Button>
+          <p className="text-center mt-5">
+            Don't have account?{" "}
+            <Link className="underline text-blue-500" href={"/signup"}>
+              SignUp
+            </Link>
+          </p>
         </div>
       </Card>
     </div>
