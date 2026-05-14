@@ -129,7 +129,7 @@ const SignUpPage = () => {
             <FcGoogle />
             SignUp with Google
           </Button>
-          <p className="text-center mt-5">
+          <p className="text-center mt-3">
             Already have an account?{" "}
             <Link className="underline text-blue-500" href={"/login"}>
               Login
