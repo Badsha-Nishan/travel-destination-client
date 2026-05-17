@@ -11,7 +11,7 @@ const MyBookingsPage = async () => {
 
   const user = session?.user;
 
-  const res = await fetch(`http://localhost:5000/bookings/${user?.id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${user?.id}`);
 
   const bookings = await res.json();
 
@@ -54,7 +54,6 @@ const MyBookingsPage = async () => {
             </div>
             <div>
               <BookingCancelAlert bookingId={booking._id} />
-              
             </div>
           </div>
         ))}

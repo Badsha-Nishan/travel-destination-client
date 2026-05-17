@@ -1,23 +1,41 @@
-
 import Image from "next/image";
 import { LuMapPin } from "react-icons/lu";
 import { FaRegCalendar } from "react-icons/fa6";
 import BookingCard from "@/app/components/BookingCard";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const DestinationDetailsPage = async ({ params }) => {
+  const headerList = await headers();
   const { id } = await params;
+  const token = await auth.api.getToken({
+    headers: new Headers(headerList),
+  });
 
-  const res = await fetch(`http://localhost:5000/destination/${id}`);
+  console.log(token);
+
+  if (!token) {
+    return <div>Please login first</div>;
+  }
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/destination/${id}`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  console.log(res);
+
+  if (!res.ok) {
+    return <div>Unauthorized Access</div>;
+  }
+
   const destination = await res.json();
-  const {
-    _id,
-    description,
-    imageUrl,
-    price,
-    destinationName,
-    duration,
-    country,
-  } = destination;
+  const { description, imageUrl, destinationName, duration, country } =
+    destination;
   return (
     <div className="w-11/12 mx-auto">
       <div className="border">
