@@ -29,11 +29,12 @@ const DestinationDetailsPage = async ({ params }) => {
 
   console.log(res);
 
+  const destination = await res.json();
+
   if (!res.ok) {
     return <div>Unauthorized Access</div>;
   }
 
-  const destination = await res.json();
   const { description, imageUrl, destinationName, duration, country } =
     destination;
   return (
