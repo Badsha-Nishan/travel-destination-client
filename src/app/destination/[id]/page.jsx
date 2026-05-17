@@ -22,7 +22,7 @@ const DestinationDetailsPage = async ({ params }) => {
     `${process.env.NEXT_PUBLIC_SERVER_URL}/destination/${id}`,
     {
       headers: {
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${token.token}`,
       },
     }
   );

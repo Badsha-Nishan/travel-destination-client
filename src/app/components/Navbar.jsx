@@ -9,7 +9,13 @@ const Navbar = () => {
   const user = session?.user;
 
   const handleLogOut = async () => {
-    await authClient.signOut();
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          window.location.href = "/";
+        },
+      },
+    });
   };
 
   return (
@@ -54,15 +60,13 @@ const Navbar = () => {
               <Avatar.Fallback>{user?.name.charAt(0)}</Avatar.Fallback>
             </Avatar>
             <li>
-              <Link href={"/"}>
-                <Button
-                  onClick={handleLogOut}
-                  variant="danger"
-                  className={"rounded-none"}
-                >
-                  LogOut
-                </Button>
-              </Link>
+              <Button
+                onClick={handleLogOut}
+                variant="danger"
+                className={"rounded-none"}
+              >
+                LogOut
+              </Button>
             </li>
           </>
         ) : (
